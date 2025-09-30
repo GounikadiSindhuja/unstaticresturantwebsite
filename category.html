@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Category - Our Restaurant</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    .category-header {
+      background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+      color: white;
+      padding: 80px 0;
+      text-align: center;
+      position: relative;
+      margin-top: 80px;
+    }
+    
+    .category-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    }
+    
+    .breadcrumb {
+      color: var(--primary-color);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+    
+    .breadcrumb a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+    
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+    
+    .category-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.2rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+    
+    .category-subtitle {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 500px;
+      margin: 0 auto;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+    
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      backdrop-filter: blur(10px);
+    }
+    
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+    }
+    
+    .category-content {
+      padding: 60px 0;
+      background: #ffffff;
+    }
+    
+    .items-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+      max-width: 1200px;
+      margin-left: 0;
+      margin-right: auto;
+      justify-items: start;
+    }
+    
+    .item-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      border: 2px solid #f8f9fa;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    .item-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color) 0%, #ffd700 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .item-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      border-color: var(--primary-color);
+    }
+    
+    .item-card:hover::before {
+      opacity: 1;
+    }
+    
+    .item-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      border-radius: 12px 12px 0 0;
+    }
+    
+    .item-card:hover .item-image {
+      transform: scale(1.05);
+    }
+    
+    .item-content {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: linear-gradient(135deg, #ffffff 0%, #fafbfc 100%);
+    }
+    
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    
+    .item-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #1f2937;
+      line-height: 1.3;
+      margin-bottom: 8px;
+      font-family: 'Playfair Display', serif;
+    }
+    
+    .item-price {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--primary-color);
+      background: linear-gradient(135deg, var(--primary-color) 0%, #ffd700 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      white-space: nowrap;
+      text-shadow: 0 2px 4px rgba(212, 175, 55, 0.2);
+    }
+    
+    .item-description {
+      color: #6b7280;
+      line-height: 1.5;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+    
+    .item-category {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      color: #92400e;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: inline-block;
+      border: 1px solid #f59e0b;
+      box-shadow: 0 2px 4px rgba(245, 158, 11, 0.2);
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 60px 20px;
+      font-size: 1.2rem;
+      color: var(--text-light);
+    }
+    
+    .error-message {
+      text-align: center;
+      padding: 60px 20px;
+      background: #ffebee;
+      color: #c62828;
+      border-radius: 15px;
+      margin: 20px;
+    }
+    
+    .no-items {
+      text-align: center;
+      padding: 80px 20px;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: 20px;
+      margin: 20px;
+    }
+    
+    .no-items i {
+      font-size: 4rem;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+    
+    .no-items h3 {
+      color: var(--text-dark);
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+    }
+    
+    .no-items p {
+      color: var(--text-light);
+      font-size: 1.1rem;
+      line-height: 1.6;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    
+    /* Professional Responsive Design */
+    @media (max-width: 768px) {
+      .category-header {
+        padding: 60px 0;
+        margin-top: 70px;
+      }
+      
+      .category-title {
+        font-size: 2.5rem;
+      }
+      
+      .category-subtitle {
+        font-size: 1rem;
+        max-width: 400px;
+      }
+      
+      .items-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0 20px;
+      }
+      
+      .item-card {
+        max-width: 100%;
+      }
+      
+      .back-button {
+        top: 15px;
+        left: 15px;
+        padding: 8px 12px;
+        font-size: 0.9rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .category-header {
+        padding: 50px 0;
+      }
+      
+      .category-title {
+        font-size: 2rem;
+      }
+      
+      .category-subtitle {
+        font-size: 0.95rem;
+      }
+      
+      .items-grid {
+        padding: 0 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <a href="index.html" style="text-decoration: none; color: inherit;">
+          <i class="fas fa-utensils"></i>
+          <span>Our Restaurant</span>
+        </a>
+      </div>
+      
+      <!-- Search Bar in Navigation -->
+      <div class="nav-search">
+        <div class="search-bar">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" id="searchInput" placeholder="Search for dishes..." class="search-input">
+          <button id="clearSearch" class="clear-search" style="display: none;">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div id="searchSuggestions" class="search-suggestions"></div>
+      </div>
+      
+      <div class="nav-menu">
+        <a href="#" class="nav-link" onclick="scrollToMenu()">Menu</a>
+        <a href="#" class="nav-link" onclick="scrollToAbout()">About</a>
+        <a href="#" class="nav-link" onclick="scrollToContact()">Contact</a>
+        <a href="#" class="nav-link cta-button" onclick="callRestaurant()">Call Now</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Category Header -->
+  <section class="category-header">
+    <a href="index.html" class="back-button">
+      <i class="fas fa-arrow-left"></i>
+      Back to Menu
+    </a>
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a> / <a href="index.html#menu">Menu</a> / <span id="category-breadcrumb">Category</span>
+      </div>
+      <h1 class="category-title" id="category-title">Category</h1>
+      <p class="category-subtitle" id="category-subtitle">Discover our delicious selection</p>
+    </div>
+  </section>
+
+  <!-- Category Content -->
+  <section class="category-content">
+    <div class="container">
+      <div id="items-container" class="items-grid">
+        <div class="loading">Loading delicious items...</div>
+      </div>
+    </div>
+  </section>
+
+  <script src="menu.js"></script>
+  <script>
+    // Load category items when page loads
+    document.addEventListener('DOMContentLoaded', async () => {
+      const selectedCategory = localStorage.getItem('selectedCategory');
+      
+      if (!selectedCategory) {
+        // If no category selected, redirect back to main page
+        window.location.href = 'index.html';
+        return;
+      }
+      
+      // Update page title and breadcrumb
+      document.getElementById('category-title').textContent = selectedCategory;
+      document.getElementById('category-breadcrumb').textContent = selectedCategory;
+      document.title = `${selectedCategory} - Our Restaurant`;
+      
+      // Set category subtitle
+      const subtitles = {
+        'Appetizers': 'Start your meal with our delicious appetizers',
+        'Starters': 'Perfect beginning to your culinary journey',
+        'Main Course': 'Hearty and satisfying main dishes',
+        'Mains': 'Our signature main course selections',
+        'Desserts': 'Sweet endings to perfect your meal',
+        'Beverages': 'Refreshing drinks to complement your meal',
+        'Drinks': 'Quench your thirst with our selection',
+        'Biryani': 'Authentic Hyderabadi biryani with premium ingredients',
+        'Curries': 'Rich and flavorful curry dishes',
+        'Rice': 'Aromatic rice dishes and specialties'
+      };
+      
+      document.getElementById('category-subtitle').textContent = 
+        subtitles[selectedCategory] || 'Discover our delicious selection';
+      
+      try {
+        // Load all menu items
+        const items = await fetchMenu();
+        
+        // Filter items for selected category
+        const categoryItems = items.filter(item => item.Category === selectedCategory);
+        
+        if (categoryItems.length === 0) {
+          document.getElementById('items-container').innerHTML = `
+            <div class="no-items">
+              <i class="fas fa-search"></i>
+              <h3>No Items in This Category</h3>
+              <p>We don't have any items in the "${selectedCategory}" category yet. Please try selecting a different category.</p>
+            </div>
+          `;
+          return;
+        }
+        
+        // Render category items
+        renderCategoryItems(categoryItems);
+        
+        // Store items globally for search functionality
+        window.allMenuItems = items;
+        
+        // Initialize search functionality
+        initializeSearch();
+        
+      } catch (error) {
+        document.getElementById('items-container').innerHTML = `
+          <div class="error-message">
+            <h3>⚠️ Failed to load items</h3>
+            <p>Please check your connection and try again.</p>
+            <button onclick="location.reload()" style="background: var(--gradient-primary); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 10px;">
+              Try Again
+            </button>
+          </div>
+        `;
+      }
+    });
+    
+    // Navigation functions for smooth scrolling
+    function scrollToMenu() {
+      window.location.href = 'index.html#menu';
+    }
+    
+    function scrollToAbout() {
+      window.location.href = 'index.html#about';
+    }
+    
+    function scrollToContact() {
+      window.location.href = 'index.html#contact';
+    }
+    
+    function callRestaurant() {
+      window.location.href = 'tel:+15551234567';
+    }
+
+    // Render category items
+    function renderCategoryItems(items) {
+      const container = document.getElementById('items-container');
+      
+      container.innerHTML = items.map((item, index) => {
+        // Check for different possible image column names (same as home page)
+        const imageUrl = item.ImageURL || item.Image || item.image || item.Photo || item.photo;
+        const imageHtml = imageUrl && imageUrl.trim() !== '' 
+          ? `<div class="menu-image-container">
+               <img src="${imageUrl}" alt="${item.ItemName || item.Name || 'Menu Item'}" class="item-image" loading="lazy" 
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+               <div class="image-placeholder" style="display: none; width: 100%; height: 250px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); align-items: center; justify-content: center; color: var(--text-light); font-size: 3rem;">
+                 <i class="fas fa-utensils"></i>
+               </div>
+             </div>`
+          : `<div class="item-image" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); display: flex; align-items: center; justify-content: center; color: var(--text-light); font-size: 3rem;">
+               <i class="fas fa-utensils"></i>
+             </div>`;
+        
+        return `
+          <div class="item-card" style="animation-delay: ${index * 0.1}s;">
+            ${imageHtml}
+            <div class="item-content">
+              <div class="item-header">
+                <h3 class="item-name">${item.ItemName || item.Name || item.item_name || 'Delicious Item'}</h3>
+                <span class="item-price">₹${item.Price || item.price || item.cost || '0'}</span>
+              </div>
+              <p class="item-description">${item.Description || item.description || item.desc || 'Delicious and carefully prepared with premium ingredients.'}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+  </script>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3 class="footer-title">
+            <i class="fas fa-utensils"></i>
+            Our Restaurant
+          </h3>
+          <p>Creating memorable dining experiences with exceptional food and service.</p>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-subtitle">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#" onclick="scrollToMenu()">Menu</a></li>
+            <li><a href="#" onclick="scrollToAbout()">About Us</a></li>
+            <li><a href="#" onclick="scrollToContact()">Contact</a></li>
+            <li><a href="#" onclick="callRestaurant()">Call Now</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-subtitle">Contact Info</h4>
+          <div class="contact-info">
+            <p><i class="fas fa-map-marker-alt"></i> 123 Restaurant Street, City</p>
+            <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+            <p><i class="fas fa-envelope"></i> info@ourrestaurant.com</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Our Restaurant. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

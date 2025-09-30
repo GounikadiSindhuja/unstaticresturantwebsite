@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Restaurant - Authentic Flavors & Premium Dining</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <i class="fas fa-utensils"></i>
+        <span>Our Restaurant</span>
+      </div>
+      
+      <!-- Search Bar in Navigation -->
+      <div class="nav-search">
+        <div class="search-bar">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" id="searchInput" placeholder="Search for dishes..." class="search-input">
+          <button id="clearSearch" class="clear-search" style="display: none;">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div id="searchSuggestions" class="search-suggestions"></div>
+      </div>
+      
+      <div class="nav-menu">
+        <a href="#menu" class="nav-link" onclick="scrollToMenu()">Menu</a>
+        <a href="#about" class="nav-link" onclick="scrollToAbout()">About</a>
+        <a href="#contact" class="nav-link" onclick="scrollToContact()">Contact</a>
+        <a href="tel:+15551234567" class="nav-link cta-button">Call Now</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-background">
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title">
+          <span class="title-line">Authentic</span>
+          <span class="title-line highlight">Flavors</span>
+          <span class="title-line">Await You</span>
+        </h1>
+        <p class="hero-subtitle">Experience traditional recipes passed down through generations, crafted with premium ingredients and served with love</p>
+        <div class="hero-buttons">
+          <button class="btn-primary" onclick="scrollToMenu()">
+            <i class="fas fa-book-open"></i>
+            View Menu
+          </button>
+          <button class="btn-secondary" onclick="callRestaurant()">
+            <i class="fas fa-phone"></i>
+            Call Now
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-indicator" onclick="scrollToMenu()">
+      <div class="scroll-arrow">
+        <i class="fas fa-chevron-down"></i>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu Categories -->
+  <section class="categories-section" id="menu">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Our Signature Menu</h2>
+        <p class="section-subtitle">Traditional recipes with a modern touch, prepared using premium ingredients and authentic cooking methods</p>
+      </div>
+      
+      <div id="categories" class="categories-grid"></div>
+    </div>
+  </section>
+
+  <!-- Menu Items (Hidden) -->
+  <section class="menu-section" style="display: none;">
+    <div class="container">
+      <div id="menu-items" class="menu-grid"></div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-text">
+          <h2 class="section-title">About Our Heritage</h2>
+          <p class="about-description">
+            Welcome to Our Restaurant, where authentic flavors meet traditional cooking methods. 
+            We've been serving generations with recipes passed down through families, using only 
+            the finest ingredients and time-honored techniques. Every dish tells a story of 
+            tradition, passion, and culinary excellence.
+          </p>
+          <div class="about-features">
+            <div class="feature">
+              <i class="fas fa-award"></i>
+              <h3>Authentic Recipes</h3>
+              <p>Traditional family recipes preserved</p>
+            </div>
+            <div class="feature">
+              <i class="fas fa-users"></i>
+              <h3>Master Chefs</h3>
+              <p>Generations of culinary expertise</p>
+            </div>
+            <div class="feature">
+              <i class="fas fa-heart"></i>
+              <h3>Pure Ingredients</h3>
+              <p>100% natural and premium quality</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="contact-content">
+        <h2 class="section-title">Contact Us</h2>
+        <div class="contact-info-grid">
+          <div class="contact-card">
+            <i class="fas fa-map-marker-alt"></i>
+            <h3>Location</h3>
+            <p>123 Restaurant Street<br>City, State 12345</p>
+          </div>
+          <div class="contact-card">
+            <i class="fas fa-phone"></i>
+            <h3>Phone</h3>
+            <p><a href="tel:+15551234567">+1 (555) 123-4567</a></p>
+          </div>
+          <div class="contact-card">
+            <i class="fas fa-envelope"></i>
+            <h3>Email</h3>
+            <p><a href="mailto:info@ourrestaurant.com">info@ourrestaurant.com</a></p>
+          </div>
+          <div class="contact-card">
+            <i class="fas fa-clock"></i>
+            <h3>Hours</h3>
+            <p>Mon-Sun: 11:00 AM - 10:00 PM</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3 class="footer-title">
+            <i class="fas fa-utensils"></i>
+            Our Restaurant
+          </h3>
+          <p>Creating memorable dining experiences with exceptional food and service.</p>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-subtitle">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#menu" onclick="scrollToMenu()">Menu</a></li>
+            <li><a href="#about" onclick="scrollToAbout()">About Us</a></li>
+            <li><a href="#contact" onclick="scrollToContact()">Contact</a></li>
+            <li><a href="tel:+15551234567">Call Now</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-subtitle">Contact Info</h4>
+          <div class="contact-info">
+            <p><i class="fas fa-map-marker-alt"></i> 123 Restaurant,Shabad</p>
+            <p><i class="fas fa-phone"></i> +91 9876543210</p>
+            <p><i class="fas fa-envelope"></i> info@ourrestaurant.com</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Our Restaurant. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Results - Our Restaurant</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    .search-page-header {
+      background: white;
+      padding: 50px 0 15px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    }
+    
+    .search-page-content {
+      background: white;
+      min-height: 60vh;
+      padding: 15px 0;
+    }
+    
+    .search-results-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .search-breadcrumb {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+    
+    .search-breadcrumb a {
+      color: var(--text-light);
+      text-decoration: none;
+    }
+    
+    .search-breadcrumb a:hover {
+      color: var(--primary-color);
+      text-decoration: underline;
+    }
+    
+    .search-page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+      text-align: left;
+    }
+    
+    
+    .search-results-summary {
+      margin-bottom: 10px;
+    }
+    
+    .search-results-count {
+      color: var(--text-dark);
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+    
+    .showing-results {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+    
+    .products-section-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      padding-bottom: 3px;
+      border-bottom: 2px solid var(--primary-color);
+      display: inline-block;
+    }
+    
+    .search-results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 20px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      justify-items: start;
+    }
+    
+    .search-result-item {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      border: 2px solid #f8f9fa;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      position: relative;
+    }
+    
+    .search-result-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color) 0%, #ffd700 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .search-result-item:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      border-color: var(--primary-color);
+    }
+    
+    .search-result-item:hover::before {
+      opacity: 1;
+    }
+    
+    .search-result-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      border-radius: 12px 12px 0 0;
+    }
+    
+    .search-result-item:hover .search-result-image {
+      transform: scale(1.05);
+    }
+    
+    .search-result-content {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: linear-gradient(135deg, #ffffff 0%, #fafbfc 100%);
+    }
+    
+    .search-result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    
+    .search-result-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #1f2937;
+      line-height: 1.3;
+      margin-bottom: 8px;
+      font-family: 'Playfair Display', serif;
+    }
+    
+    .search-result-price {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--primary-color);
+      background: linear-gradient(135deg, var(--primary-color) 0%, #ffd700 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      white-space: nowrap;
+      text-shadow: 0 2px 4px rgba(212, 175, 55, 0.2);
+    }
+    
+    .search-result-description {
+      color: #6b7280;
+      line-height: 1.5;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+    
+    .search-result-category {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      color: #92400e;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: inline-block;
+      border: 1px solid #f59e0b;
+      box-shadow: 0 2px 4px rgba(245, 158, 11, 0.2);
+    }
+    
+    .no-search-results {
+      text-align: center;
+      padding: 80px 20px;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: 20px;
+      margin: 40px 0;
+    }
+    
+    .no-search-results i {
+      font-size: 4rem;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      opacity: 0.7;
+    }
+    
+    .no-search-results h3 {
+      color: var(--text-dark);
+      margin-bottom: 15px;
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+    
+    .no-search-results p {
+      color: var(--text-light);
+      font-size: 1.1rem;
+      line-height: 1.6;
+      max-width: 500px;
+      margin: 0 auto 30px;
+    }
+    
+    .search-suggestions {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      margin-top: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+    
+    .search-suggestions h4 {
+      color: var(--text-dark);
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    
+    .suggestion-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .suggestion-tag {
+      background: var(--bg-light);
+      color: var(--text-dark);
+      padding: 8px 16px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+    }
+    
+    .suggestion-tag:hover {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+    }
+    
+    @media (max-width: 768px) {
+      .search-page-title {
+        font-size: 2rem;
+      }
+      
+      .search-results-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .search-result-item {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <a href="index.html" style="text-decoration: none; color: inherit;">
+          <i class="fas fa-utensils"></i>
+          <span>Our Restaurant</span>
+        </a>
+      </div>
+      
+      <!-- Search Bar in Navigation -->
+      <div class="nav-search">
+        <div class="search-bar">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" id="searchInput" placeholder="Search for dishes..." class="search-input">
+          <button id="clearSearch" class="clear-search" style="display: none;">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div id="searchSuggestions" class="search-suggestions"></div>
+      </div>
+      
+      <div class="nav-menu">
+        <a href="index.html#menu" class="nav-link">Menu</a>
+        <a href="index.html#about" class="nav-link">About</a>
+        <a href="index.html#contact" class="nav-link">Contact</a>
+        <a href="tel:+15551234567" class="nav-link cta-button">Call Now</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Search Page Header -->
+  <section class="search-page-header">
+    <div class="search-results-container">
+      <!-- Breadcrumb -->
+      <div class="search-breadcrumb">
+        <a href="index.html">Home</a> / Search results for "<span id="breadcrumbQuery">Loading...</span>"
+      </div>
+      
+      <h1 class="search-page-title">Search results</h1>
+      
+      <!-- Results Summary -->
+      <div class="search-results-summary">
+        <div class="search-results-count" id="resultsCount">0 results found for "<span id="summaryQuery">Loading...</span>"</div>
+        <div class="showing-results">Showing <span id="showingCount">0</span> result<span id="resultPlural">s</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search Results Content -->
+  <section class="search-page-content">
+    <div class="search-results-container">
+      <div id="searchResults" class="search-results-grid">
+        <div class="loading">Loading search results...</div>
+      </div>
+      
+      <!-- No Results Section -->
+      <div id="noResults" class="no-search-results" style="display: none;">
+        <i class="fas fa-search"></i>
+        <h3>No Results Found</h3>
+        <p>We couldn't find any dishes matching your search. Try different keywords or browse our menu categories.</p>
+        <div class="search-suggestions">
+          <h4>Popular Categories:</h4>
+          <div class="suggestion-tags">
+            <a href="index.html" class="suggestion-tag">Appetizers</a>
+            <a href="index.html" class="suggestion-tag">Main Course</a>
+            <a href="index.html" class="suggestion-tag">Desserts</a>
+            <a href="index.html" class="suggestion-tag">Beverages</a>
+            <a href="index.html" class="suggestion-tag">Vegetarian</a>
+            <a href="index.html" class="suggestion-tag">Chicken</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3 class="footer-title">
+            <i class="fas fa-utensils"></i>
+            Our Restaurant
+          </h3>
+          <p>Creating memorable dining experiences with exceptional food and service.</p>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-subtitle">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#menu">Menu</a></li>
+            <li><a href="index.html#about">About Us</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="tel:+15551234567">Call Now</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-subtitle">Contact Info</h4>
+          <div class="contact-info">
+            <p><i class="fas fa-map-marker-alt"></i> 123 Restaurant Street, City</p>
+            <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+            <p><i class="fas fa-envelope"></i> info@ourrestaurant.com</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Our Restaurant. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="menu.js"></script>
+  <script>
+    // Search results page functionality
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Get search query from URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const searchQuery = urlParams.get('q') || '';
+      
+      if (!searchQuery) {
+        // If no search query, redirect to home page
+        window.location.href = 'index.html';
+        return;
+      }
+      
+      // Display search query in breadcrumb and summary
+      document.getElementById('breadcrumbQuery').textContent = searchQuery;
+      document.getElementById('summaryQuery').textContent = searchQuery;
+      
+      try {
+        // Load all menu items
+        const items = await fetchMenu();
+        
+        // Search through menu items
+        const results = items.filter(item => {
+          const name = (item.ItemName || item.Name || item.item_name || '').toLowerCase();
+          const description = (item.Description || item.description || item.desc || '').toLowerCase();
+          const category = (item.Category || item.category || '').toLowerCase();
+          const searchTerm = searchQuery.toLowerCase().trim();
+          
+          return name.includes(searchTerm) || 
+                 (searchTerm.length >= 3 && description.includes(searchTerm)) ||
+                 (searchTerm.length >= 3 && category.includes(searchTerm));
+        });
+        
+        // Update results count and summary
+        document.getElementById('resultsCount').textContent = `${results.length} results found for "${searchQuery}"`;
+        document.getElementById('showingCount').textContent = results.length;
+        document.getElementById('resultPlural').textContent = results.length !== 1 ? 's' : '';
+        
+        if (results.length === 0) {
+          // Show no results
+          document.getElementById('searchResults').style.display = 'none';
+          document.getElementById('noResults').style.display = 'block';
+        } else {
+          // Display results
+          displaySearchResults(results);
+          
+          // Add Products section title right after the dish
+          const productsTitle = document.createElement('h2');
+          productsTitle.className = 'products-section-title';
+          productsTitle.textContent = `Products (${results.length})`;
+          document.getElementById('searchResults').parentNode.insertBefore(productsTitle, document.getElementById('searchResults'));
+        }
+        
+        // Store items globally for search functionality
+        window.allMenuItems = items;
+        
+        // Initialize search functionality
+        initializeSearch();
+        
+        
+      } catch (error) {
+        console.error('Error loading search results:', error);
+        document.getElementById('searchResults').innerHTML = `
+          <div class="no-search-results">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>Error Loading Results</h3>
+            <p>There was an error loading the search results. Please try again.</p>
+            <a href="index.html" class="suggestion-tag">Back to Menu</a>
+          </div>
+        `;
+      }
+    });
+    
+    function displaySearchResults(results) {
+      const container = document.getElementById('searchResults');
+      
+      container.innerHTML = results.map((item, index) => {
+        const imageUrl = item.ImageURL || item.Image || item.image || item.Photo || item.photo;
+        const name = item.ItemName || item.Name || item.item_name || 'Menu Item';
+        const price = item.Price || item.price || item.cost || '0';
+        const description = item.Description || item.description || item.desc || 'Delicious and carefully prepared with premium ingredients.';
+        const category = item.Category || item.category || '';
+        
+        const imageHtml = imageUrl && imageUrl.trim() !== '' 
+          ? `<img src="${imageUrl}" alt="${name}" class="search-result-image" loading="lazy" onerror="this.style.display='none';">`
+          : `<div class="search-result-image" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); display: flex; align-items: center; justify-content: center; color: var(--text-light); font-size: 3rem;">
+               <i class="fas fa-utensils"></i>
+             </div>`;
+        
+        return `
+          <div class="search-result-item" style="animation-delay: ${index * 0.1}s;">
+            ${imageHtml}
+            <div class="search-result-content">
+              <div class="search-result-header">
+                <h3 class="search-result-name">${name}</h3>
+                <span class="search-result-price">₹${price}</span>
+              </div>
+              <p class="search-result-description">${description}</p>
+              ${category ? `<div class="search-result-category">${category}</div>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+    
+    // Navigation functions
+    function scrollToMenu() {
+      window.location.href = 'index.html#menu';
+    }
+    
+    function scrollToAbout() {
+      window.location.href = 'index.html#about';
+    }
+    
+    function scrollToContact() {
+      window.location.href = 'index.html#contact';
+    }
+    
+    function callRestaurant() {
+      window.location.href = 'tel:+15551234567';
+    }
+  </script>
+</body>
+</html>
