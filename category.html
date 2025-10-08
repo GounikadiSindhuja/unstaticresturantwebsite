@@ -331,6 +331,19 @@
         <a href="#" class="nav-link" onclick="scrollToContact()">Contact</a>
         <a href="#" class="nav-link cta-button" onclick="callRestaurant()">Call Now</a>
       </div>
+      
+      <!-- Mobile Menu Toggle -->
+      <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    
+    <!-- Mobile Navigation Menu -->
+    <div class="mobile-nav-menu" id="mobileNavMenu">
+      <a href="#" class="mobile-nav-link" onclick="scrollToMenu(); closeMobileMenu()">Menu</a>
+      <a href="#" class="mobile-nav-link" onclick="scrollToAbout(); closeMobileMenu()">About</a>
+      <a href="#" class="mobile-nav-link" onclick="scrollToContact(); closeMobileMenu()">Contact</a>
+      <a href="#" class="mobile-cta-button" onclick="callRestaurant(); closeMobileMenu()">Call Now</a>
     </div>
   </nav>
 
