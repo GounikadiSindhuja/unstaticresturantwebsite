@@ -573,8 +573,10 @@ function displaySuggestions(results) {
       <div class="suggestion-item" onclick="selectSuggestion('${name}')">
         ${imageUrl ? `<img src="${imageUrl}" alt="${name}" onerror="this.style.display='none'">` : ''}
         <div class="suggestion-content">
-          <div class="suggestion-name">${highlightedName}</div>
-          <div class="suggestion-price">₹${price}</div>
+          <div class="suggestion-name-price">
+            <div class="suggestion-name">${highlightedName}</div>
+            <div class="suggestion-price">₹${price}</div>
+          </div>
           ${category ? `<div class="suggestion-category">${category}</div>` : ''}
         </div>
       </div>
@@ -665,3 +667,45 @@ function removeSearchResultsHeader() {
     existingHeader.remove();
   }
 }
+
+// ===== MOBILE NAVIGATION FUNCTIONS =====
+function toggleMobileMenu() {
+  const mobileMenu = document.getElementById('mobileNavMenu');
+  const toggleButton = document.querySelector('.mobile-menu-toggle i');
+  
+  if (mobileMenu.classList.contains('show')) {
+    mobileMenu.classList.remove('show');
+    toggleButton.classList.remove('fa-times');
+    toggleButton.classList.add('fa-bars');
+  } else {
+    mobileMenu.classList.add('show');
+    toggleButton.classList.remove('fa-bars');
+    toggleButton.classList.add('fa-times');
+  }
+}
+
+function closeMobileMenu() {
+  const mobileMenu = document.getElementById('mobileNavMenu');
+  const toggleButton = document.querySelector('.mobile-menu-toggle i');
+  
+  mobileMenu.classList.remove('show');
+  toggleButton.classList.remove('fa-times');
+  toggleButton.classList.add('fa-bars');
+}
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(event) {
+  const mobileMenu = document.getElementById('mobileNavMenu');
+  const toggleButton = document.querySelector('.mobile-menu-toggle');
+  
+  if (mobileMenu && !mobileMenu.contains(event.target) && !toggleButton.contains(event.target)) {
+    closeMobileMenu();
+  }
+});
+
+// Close mobile menu on window resize
+window.addEventListener('resize', function() {
+  if (window.innerWidth > 768) {
+    closeMobileMenu();
+  }
+});
