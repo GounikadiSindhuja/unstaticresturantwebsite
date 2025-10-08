@@ -264,17 +264,42 @@
     }
     
     @media (max-width: 768px) {
+      .search-page-header {
+        padding: 40px 0 15px;
+      }
+      
+      .search-page-content {
+        padding: 20px 0;
+      }
+      
+      .search-results-container {
+        padding: 0 15px;
+      }
+      
       .search-page-title {
         font-size: 2rem;
+        word-wrap: break-word;
       }
       
       .search-results-grid {
         grid-template-columns: 1fr;
         gap: 20px;
+        padding: 0 10px;
       }
       
       .search-result-item {
         max-width: 100%;
+        word-wrap: break-word;
+      }
+      
+      .search-result-name {
+        font-size: 1.1rem;
+        word-wrap: break-word;
+      }
+      
+      .search-result-description {
+        font-size: 0.9rem;
+        word-wrap: break-word;
       }
     }
   </style>
@@ -308,6 +333,19 @@
         <a href="index.html#contact" class="nav-link">Contact</a>
         <a href="tel:+15551234567" class="nav-link cta-button">Call Now</a>
       </div>
+      
+      <!-- Mobile Menu Toggle -->
+      <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    
+    <!-- Mobile Navigation Menu -->
+    <div class="mobile-nav-menu" id="mobileNavMenu">
+      <a href="index.html#menu" class="mobile-nav-link" onclick="closeMobileMenu()">Menu</a>
+      <a href="index.html#about" class="mobile-nav-link" onclick="closeMobileMenu()">About</a>
+      <a href="index.html#contact" class="mobile-nav-link" onclick="closeMobileMenu()">Contact</a>
+      <a href="tel:+15551234567" class="mobile-cta-button" onclick="closeMobileMenu()">Call Now</a>
     </div>
   </nav>
 
