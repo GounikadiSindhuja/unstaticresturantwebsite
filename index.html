@@ -35,6 +35,19 @@
         <a href="#contact" class="nav-link" onclick="scrollToContact()">Contact</a>
         <a href="tel:+15551234567" class="nav-link cta-button">Call Now</a>
       </div>
+      
+      <!-- Mobile Menu Toggle -->
+      <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    
+    <!-- Mobile Navigation Menu -->
+    <div class="mobile-nav-menu" id="mobileNavMenu">
+      <a href="#menu" class="mobile-nav-link" onclick="scrollToMenu(); closeMobileMenu()">Menu</a>
+      <a href="#about" class="mobile-nav-link" onclick="scrollToAbout(); closeMobileMenu()">About</a>
+      <a href="#contact" class="mobile-nav-link" onclick="scrollToContact(); closeMobileMenu()">Contact</a>
+      <a href="tel:+15551234567" class="mobile-cta-button" onclick="closeMobileMenu()">Call Now</a>
     </div>
   </nav>
 
